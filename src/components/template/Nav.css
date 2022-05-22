@@ -1,5 +1,5 @@
 .menu {
-    min-width: 18vw;
+    min-width: 20vw;
     height: 100vh;
 
     background-color: rgba(21, 19, 19, 0.21);
@@ -9,11 +9,13 @@
 .user {
     background: rgba(63, 54, 54, 0.34);
     display: flex;
-    padding: 22px 32px;
+    padding: 18px 22px;
     align-items: center;
     justify-content: space-between;
     border: 1px solid #85AE93;
     cursor: pointer;
+    text-decoration: none;
+    color: #DBE1D6;
 }
 
 .active {
@@ -22,32 +24,46 @@
 }
 
 .user-connected {
-    margin-bottom: 120px; 
+    margin-bottom: 100px; 
     border: none;
-    padding: 8px 32px;
+    padding: 8px 20px;
     cursor: auto;
 }
 
 .info-user {
     display: flex;
     align-items: center;
-    gap: 18px;
+    gap: 8px;
 }
 
 .user img {
-    width: 76px;
-    height: 80px;
+    width: 70px;
+    height: 70px;
 }
 
-.status {
-    width: 33px;
+.online {
+    width: 35px;
     height: 35px;
     background-color: #3A990D;
     border-radius: 50%;
 }
 
+.absent {
+    width: 35px;
+    height: 35px;
+    background-color: #C1BA09;
+    border-radius: 50%;
+}
+
+.offline {
+    width: 35px;
+    height: 35px;
+    background-color: #E12323;
+    border-radius: 50%;
+}
+
 h1, h2 {
     font-weight: 400;
-    font-size: 36px;
+    font-size: 30px;
     line-height: 44px;
 }

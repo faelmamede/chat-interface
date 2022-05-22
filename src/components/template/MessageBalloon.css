@@ -1,0 +1,25 @@
+.balloon {
+  background-color: #EDE8E8;
+  display: flex;
+  justify-content: space-between;
+  width: 55%;
+  border-radius: 30px;
+}
+
+.send-message {
+  align-self: end;
+}
+
+.balloon p {
+  padding: 18px;
+  font-size: 22px;
+  line-height: 38px;
+}
+
+.balloon span {
+  align-self: end;
+  padding-right: 20px;
+  opacity: 0.65;
+  font-size: 14px;
+  line-height: 26px;
+}
