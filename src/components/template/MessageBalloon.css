@@ -6,8 +6,12 @@
   border-radius: 30px;
 }
 
-.send-message {
-  align-self: end;
+.sent-message {
+  align-self: flex-end;
+}
+
+.received-message {
+  align-self: flex-start;
 }
 
 .balloon p {

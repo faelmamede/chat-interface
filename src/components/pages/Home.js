@@ -1,8 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import axios from 'axios';
+
 import userImg from '../../images/user.png';
+import refreshImage from '../../images/refresh.svg';
 import MessageBalloon from '../template/MessageBalloon';
 
 import './Home.css'
+
+const baseURL = process.env.REACT_APP_SERVER_ENDPOINT;
+const nickname = process.env.REACT_APP_NICKNAME;
 
 function Home(props) {
     const [activeUser, setActiveUser] = useState('user');
@@ -23,19 +29,58 @@ function Home(props) {
 
     function sendMessage() {
         const message = document.querySelector('#message').value;
-        const hour = new Date().getHours();
-        const minute = new Date().getMinutes();
-        const time = hour + ':' + minute;
-        const updateMessages = [
-            ...messages,
-            {
-                user: activeUser,
-                text: message,
-                time: time
-            }
-        ];
-        setMessages(updateMessages);
-        document.querySelector('#message').value = ''; 
+
+        axios.post(`${baseURL}/chat/sendMessage`, {
+            from: nickname,
+            to: activeUser,
+            message: message
+        }).then(response => {
+            const time = new Date(response.data);
+            const hour = time.getHours();
+            const minute = time.getMinutes();
+            const hourAndMinute = hour + ':' + minute;
+            const updateMessages = [
+                ...messages,
+                {
+                    user: activeUser,
+                    text: message,
+                    time: hourAndMinute,
+                    flow: 'sent'
+                }
+            ];
+            setMessages(updateMessages);
+            document.querySelector('#message').value = '';
+        });
+    }
+
+    function getMessages() {
+        axios.post(`${baseURL}/chat/getAllMessages`, {
+            talkers: [ nickname, activeUser ]
+        }).then(response => {
+            setMessages(response.data.map(messageObj => {
+                const time = new Date(messageObj.time);
+                const hour = time.getHours();
+                const minute = time.getMinutes();
+                const hourAndMinute = hour + ':' + minute; 
+                messageObj.flow = messageObj.from === nickname? 'sent' : 'received';
+                messageObj.user = messageObj.to !== nickname ? messageObj.to : messageObj.from;
+                messageObj.text = messageObj.message;
+                messageObj.time = hourAndMinute;
+                return messageObj;
+            }));
+            axios.delete(`${baseURL}/user/deleteNotification`, { data: {
+                from: activeUser,
+                to: nickname
+            }}).then(response => 
+                scrollMessageContainer());
+        });
+    }
+
+    function scrollMessageContainer() {
+        setTimeout(() => {
+            const messageContainer = document.querySelector('.user-messages');
+            messageContainer.scrollTop = messageContainer.scrollHeight; 
+        }, 50)
     }
 
     return (
@@ -44,10 +89,13 @@ function Home(props) {
                 <div className='user-info'>
                     <img src={userImg} alt="User" />
                     <h2>{activeUser}</h2>
+                    <div className='reload-messages' onClick={() => getMessages()}>
+                        <img src={refreshImage} alt="Refresh" />
+                    </div>
                 </div>
                 <section className='user-messages'>
                     {messages.map(msg => 
-                        <MessageBalloon sendMessage="send-message" text={msg.text} user={msg.user} activeUser={activeUser} time={msg.time} />
+                        <MessageBalloon sendMessage={`${msg.flow}-message`} text={msg.text} user={msg.user} activeUser={activeUser} time={msg.time} />
                     )}
                 </section>
             </section>

@@ -46,6 +46,11 @@
     height: 35px;
     background-color: #3A990D;
     border-radius: 50%;
+
+    display: flex;
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
 }
 
 .absent {
@@ -53,6 +58,11 @@
     height: 35px;
     background-color: #C1BA09;
     border-radius: 50%;
+
+    display: flex;
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
 }
 
 .offline {
@@ -60,6 +70,11 @@
     height: 35px;
     background-color: #E12323;
     border-radius: 50%;
+
+    display: flex;
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
 }
 
 h1, h2 {

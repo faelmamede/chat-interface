@@ -29,6 +29,7 @@
     align-items: center;
     gap: 25px;
     margin-bottom: 25px;
+    position: relative;
 }
 
 .user-info img {
@@ -41,6 +42,12 @@
     font-size: 36px;
     line-height: 58px;
     color: #DBE1D6;
+}
+
+.user-info .reload-messages {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
 }
 
 .user-messages {
